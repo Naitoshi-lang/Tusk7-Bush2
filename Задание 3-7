@@ -1,0 +1,33 @@
+Числа -97 и 96
+
+def add_binary(a, b):
+    return bin(int(a, 2) + int(b, 2))[2:].zfill(16)
+
+a = -97
+b = 96
+
+# Convert integers to binary representation
+a_binary = int_to_binary(a)
+b_binary = int_to_binary(b)
+result_binary = add_binary(a_binary, b_binary)
+result_int = int(result_binary, 2) - 65536 if result_binary[0] == '1' else int(result_binary, 2)
+
+print("Result of addition:", result_int)
+
+
+
+
+Числа 79 и -46
+
+def add_binary(a, b):
+    return bin(int(a, 2) + int(b, 2))[2:].zfill(8)
+
+a = 79
+b = -46
+
+a_binary = int_to_binary(a)
+b_binary = int_to_binary(b)
+result_binary = add_binary(a_binary, b_binary)
+result_int = int(result_binary, 2) - 256 if result_binary[0] == '1' else int(result_binary, 2)
+
+print("Результат сложения:", result_int)
