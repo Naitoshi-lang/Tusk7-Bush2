@@ -1,0 +1,18 @@
+if [ "\$1" = "home" ]; then
+  NEW_BASHRC=~/.bashrc-home
+elif [ "\$1" = "work" ]; then
+  NEW_BASHRC=~/.bashrc-work
+else
+  echo "Неправильный аргумент. Используйте 'home' или 'work'."
+  exit 1
+fi
+
+if [ "$NEW_BASHRC" = "$CURRENT_BASHRC" ]; then
+  echo "Файл $NEW_BASHRC уже используется."
+  exit 0
+fi
+
+rm -f ~/.bashrc
+ln -s "$NEW_BASHRC" ~/.bashrc
+
+echo "Переключение на файл $NEW_BASHRC выполнено успешно."
