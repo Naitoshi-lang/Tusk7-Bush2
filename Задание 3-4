@@ -1,0 +1,15 @@
+files_with_string=$(grep -RIZl "123" target)
+
+if [ -n "$files_with_string" ]; then
+  echo "cp OK"
+  xargs -0 cp -t . <<< "$files_with_string"
+else
+  echo "cp FAILS"
+fi
+files_without_string=$(grep -RLZl "123" target)
+if [ -n "$files_without_string" ]; then
+  echo "rm OK"
+  xargs -0 rm <<< "$files_without_string"
+else
+  echo "rm FAILS"
+fi
