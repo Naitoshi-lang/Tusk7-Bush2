@@ -1,0 +1,42 @@
+
+ls -R $1 | while read i
+do
+  if ! [[ $i == *":"* ]];
+  then
+  if ! [ -z $i ];
+  then
+  if [ -e "$2/$i" ]
+  then
+    if [ `stat -c %Y $1/$i` -lt `stat -c %Y $2/$i` ] || [ `stat -c %s $1/$i`    -lt `stat -c %s $2/$i` ]
+     then
+     if ! [ -d $i ];
+     then
+     echo "$(basename $1): $(find $1 -name $i | sed "s_$1__" ) $(stat -c%s" "%z $1/$(find $1 -name $i | sed "s_$1__" ) | cut -d"." -f1) $(basename $2): $(find $2 -name $i | sed "s_$2__" ) $(stat -c%s" "%z $2/$(find $2 -name $i | sed "s_$2__" ) | cut -d"." -f1)"
+     else
+     echo "$(basename $1): $(find $1 -type d -name $i | sed "s_$1__" ) $(stat -c%s" "%z $1/$(find $1 -type d -name $i | sed "s_$1__" ) | cut -d"." -f1) $(basename $2): $(find $2 -type d -name $i | sed "s_$2__" ) $(stat -c%s" "%z $2/$(find $2 -name $i | sed "s_$2__" ) | cut -d"." -f1)"
+     fi
+   fi
+else
+     if ! [ -d $i ];
+     then
+     echo "$(basename $1): $(find $1 -name $i | sed "s_$1__" ) $(stat -c%s" "%z $1/$(find $1 -name $i | sed "s_$1__" ) | cut -d"." -f1) $(basename $2):"
+     else
+     echo "$(basename $1): $(find $1 -type d -name $i | sed "s_$1__" ) $(stat -c%s" "%z $1/$(find $1 -type d -name $i | sed "s_$1__" ) | cut -d"." -f1) $(basename $2):"
+     fi
+  fi
+fi
+fi
+done
+
+ls -R $2 | while read i
+do
+ if ! [[ $i == *":"* ]];
+ then
+   if ! [ -z $i ];
+ then
+ if [ ! -e "$1/$i" ]
+ then echo "$(basename $1): $(basename $2): $(find $2 -name $i | sed "s_$2__" ) $(stat -c%s" "%z $2/$(find $2 -name $i | sed "s_$2__" ) | cut -d"." -f1)"
+ fi
+ fi
+  fi
+ done
